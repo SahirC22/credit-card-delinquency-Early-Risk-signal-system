@@ -1,0 +1,47 @@
+{
+  "model_version": "1.0",
+  "training_date": "2025-12-01",
+  "feature_columns": [
+    "Credit_Limit",
+    "Utilisation_%",
+    "Avg_Payment_Ratio",
+    "Min_Due_Paid_Frequency",
+    "Merchant_Mix_Index",
+    "Cash_Withdrawal_%",
+    "Recent_Spend_Change_%"
+  ],
+  "random_forest_accuracy": 0.8,
+  "random_forest_auc": 0.7,
+  "gradient_boosting_accuracy": 0.8,
+  "gradient_boosting_auc": 0.6,
+  "feature_importance": [
+    {
+      "Feature": "Utilisation_%",
+      "Importance": 0.163
+    },
+    {
+      "Feature": "Min_Due_Paid_Frequency",
+      "Importance": 0.154
+    },
+    {
+      "Feature": "Merchant_Mix_Index",
+      "Importance": 0.154
+    },
+    {
+      "Feature": "Recent_Spend_Change_%",
+      "Importance": 0.143
+    },
+    {
+      "Feature": "Avg_Payment_Ratio",
+      "Importance": 0.135
+    },
+    {
+      "Feature": "Cash_Withdrawal_%",
+      "Importance": 0.126
+    },
+    {
+      "Feature": "Credit_Limit",
+      "Importance": 0.125
+    }
+  ]
+}
