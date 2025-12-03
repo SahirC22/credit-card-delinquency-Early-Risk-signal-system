@@ -1,16 +1,16 @@
-# Credit Card Delinquency Predictor - ML Web Application
+# Credit Card Delinquency Dashboard - ML Powered Web Application
 
 ## Overview
 A complete machine learning-powered web application for predicting credit card delinquency risk with real-time data integration.
 
 ## Features
-✅ **Dual ML Models** - Random Forest & Gradient Boosting (80% accuracy, 0.70 AUC)
-✅ **Multi-Source Data** - CSV, XLSX, MySQL database, Live API integration
-✅ **Real-Time Risk Scoring** - 0-10 risk scale with 3-tier classification
-✅ **Interactive Dashboards** - Plotly visualizations, filterable tables
-✅ **Dynamic Adaptation** - Automatically adjusts to data patterns
-✅ **Export Functionality** - Download risk assessments as CSV
-✅ **Single Customer Prediction** - Manual input for individual risk assessment
+ **Dual ML Models** - Random Forest & Gradient Boosting (80% accuracy, 0.70 AUC)
+ **Multi-Source Data** - CSV, XLSX, MySQL database, Live API integration
+ **Real-Time Risk Scoring** - 0-10 risk scale with 3-tier classification
+ **Interactive Dashboards** - Plotly visualizations, filterable tables
+ **Dynamic Adaptation** - Automatically adjusts to data patterns
+ **Export Functionality** - Download risk assessments as CSV
+ **Single Customer Prediction** - Manual input for individual risk assessment
 
 ## Installation
 
@@ -154,7 +154,9 @@ CREATE TABLE customer_data (
 - [ ] RESTful API endpoint
 
 ## Contact
-For issues or questions, please contact your data science team.
+For issues or questions, please contact me.
+EMail: rajsahir001@gmail.com
+Linkedin: https://www.linkedin.com/in/sahirchoudhury
 
 ---
 **Version**: 1.0  
