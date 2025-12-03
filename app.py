@@ -24,17 +24,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CUSTOM CSS - clean, minimal, professional
+# CUSTOM CSS - clean, minimal, professional with dark mode support
 st.markdown(
     """
 <style>
     /* Layout */
     .stApp {
-        background-color: #f3f4f6;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
                      "Segoe UI", sans-serif;
     }
 
+    /* Light mode defaults */
     .main-header {
         font-size: 2.2rem;
         font-weight: 650;
@@ -113,16 +113,19 @@ st.markdown(
     .insight-box {
         background-color: #fffbeb;
         border-color: #fbbf24;
+        color: #92400e;
     }
 
     .error-box {
         background-color: #fef2f2;
         border-color: #ef4444;
+        color: #991b1b;
     }
 
     .success-box {
         background-color: #ecfdf3;
         border-color: #10b981;
+        color: #065f46;
     }
 
     .stTabs [data-baseweb="tab-list"] {
@@ -153,7 +156,240 @@ st.markdown(
         border: 1px solid #e5e7eb;
         box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
     }
+
+    /* Footer text styling */
+    .footer-text {
+        color: #6b7280;
+    }
+
+    /* Dark mode styles - using Streamlit's dark mode detection */
+    @media (prefers-color-scheme: dark) {
+        .main-header {
+            color: #ffffff !important;
+        }
+
+        .sub-header {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        .metric-card,
+        .high-risk-card,
+        .medium-risk-card,
+        .low-risk-card {
+            background: rgba(255, 255, 255, 0.05) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .metric-card h2,
+        .high-risk-card h2,
+        .medium-risk-card h2,
+        .low-risk-card h2 {
+            color: #ffffff !important;
+        }
+
+        .metric-card p,
+        .high-risk-card p,
+        .medium-risk-card p,
+        .low-risk-card p {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .metric-card small,
+        .high-risk-card small,
+        .medium-risk-card small,
+        .low-risk-card small {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        .insight-box {
+            background-color: rgba(251, 191, 36, 0.2) !important;
+            border-color: #fbbf24 !important;
+            color: #fcd34d !important;
+        }
+
+        .error-box {
+            background-color: rgba(239, 68, 68, 0.2) !important;
+            border-color: #ef4444 !important;
+            color: #fca5a5 !important;
+        }
+
+        .success-box {
+            background-color: rgba(16, 185, 129, 0.2) !important;
+            border-color: #10b981 !important;
+            color: #6ee7b7 !important;
+        }
+
+        .stTabs [data-baseweb="tab-list"] {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .stTabs [data-baseweb="tab"] {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .stTabs [aria-selected="true"] {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+        }
+
+        .stDataFrame {
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+    }
 </style>
+
+<script>
+    // Detect and apply dark mode styles dynamically for Streamlit
+    function applyDarkModeStyles() {
+        // Check Streamlit's actual theme by looking at computed styles
+        const appContainer = document.querySelector('[data-testid="stAppViewContainer"]');
+        const body = document.body;
+        
+        // Get background colors
+        const appBg = appContainer ? window.getComputedStyle(appContainer).backgroundColor : '';
+        const bodyBg = body ? window.getComputedStyle(body).backgroundColor : '';
+        
+        // Streamlit dark mode background colors (various versions)
+        const darkBgColors = [
+            'rgb(38, 39, 48)',
+            'rgb(14, 17, 23)',
+            'rgba(38, 39, 48, 1)',
+            'rgba(14, 17, 23, 1)'
+        ];
+        
+        // Check if background is dark
+        const isDarkBg = darkBgColors.includes(appBg) || darkBgColors.includes(bodyBg);
+        
+        // Also check prefers-color-scheme
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Check if the computed background color is dark (low brightness)
+        function isDarkColor(rgb) {
+            if (!rgb || rgb === 'rgba(0, 0, 0, 0)' || rgb === 'transparent') return false;
+            const match = rgb.match(/\d+/g);
+            if (!match || match.length < 3) return false;
+            const r = parseInt(match[0]);
+            const g = parseInt(match[1]);
+            const b = parseInt(match[2]);
+            // Calculate brightness (0-255)
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            return brightness < 128; // Dark if brightness < 128
+        }
+        
+        const isDarkMode = isDarkBg || prefersDark || 
+                          (appBg && isDarkColor(appBg)) || 
+                          (bodyBg && isDarkColor(bodyBg));
+        
+        if (isDarkMode) {
+            // Apply dark mode styles to custom elements
+            const style = document.createElement('style');
+            style.id = 'dark-mode-override';
+            style.textContent = `
+                .main-header { color: #ffffff !important; }
+                .sub-header { color: rgba(255, 255, 255, 0.8) !important; }
+                .metric-card, .high-risk-card, .medium-risk-card, .low-risk-card {
+                    background: rgba(255, 255, 255, 0.05) !important;
+                    color: #ffffff !important;
+                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                }
+                .metric-card h2, .high-risk-card h2, .medium-risk-card h2, .low-risk-card h2 {
+                    color: #ffffff !important;
+                }
+                .metric-card p, .high-risk-card p, .medium-risk-card p, .low-risk-card p {
+                    color: rgba(255, 255, 255, 0.7) !important;
+                }
+                .metric-card small, .high-risk-card small, .medium-risk-card small, .low-risk-card small {
+                    color: rgba(255, 255, 255, 0.6) !important;
+                }
+                .insight-box {
+                    background-color: rgba(251, 191, 36, 0.2) !important;
+                    border-color: #fbbf24 !important;
+                    color: #fcd34d !important;
+                }
+                .error-box {
+                    background-color: rgba(239, 68, 68, 0.2) !important;
+                    border-color: #ef4444 !important;
+                    color: #fca5a5 !important;
+                }
+                .success-box {
+                    background-color: rgba(16, 185, 129, 0.2) !important;
+                    border-color: #10b981 !important;
+                    color: #6ee7b7 !important;
+                }
+                .stTabs [data-baseweb="tab-list"] {
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+                }
+                .stTabs [data-baseweb="tab"] {
+                    color: rgba(255, 255, 255, 0.7) !important;
+                }
+                .stTabs [aria-selected="true"] {
+                    background-color: rgba(255, 255, 255, 0.1) !important;
+                    color: #ffffff !important;
+                }
+                .stDataFrame {
+                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                }
+                .footer-text {
+                    color: rgba(255, 255, 255, 0.7) !important;
+                }
+            `;
+            
+            // Remove old override if exists
+            const oldStyle = document.getElementById('dark-mode-override');
+            if (oldStyle) oldStyle.remove();
+            
+            document.head.appendChild(style);
+        } else {
+            // Remove dark mode override in light mode
+            const oldStyle = document.getElementById('dark-mode-override');
+            if (oldStyle) oldStyle.remove();
+        }
+    }
+    
+    // Apply immediately if DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(applyDarkModeStyles, 500); // Wait for Streamlit to initialize
+        });
+    } else {
+        setTimeout(applyDarkModeStyles, 500);
+    }
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(function() {
+        setTimeout(applyDarkModeStyles, 100);
+    });
+    
+    // Observe body and app container for changes
+    if (document.body) {
+        observer.observe(document.body, { 
+            attributes: true, 
+            attributeFilter: ['class', 'style'],
+            childList: true,
+            subtree: true
+        });
+    }
+    
+    // Also check on window load
+    window.addEventListener('load', function() {
+        setTimeout(applyDarkModeStyles, 1000);
+    });
+    
+    // Watch for Streamlit reruns (it changes the DOM structure)
+    let lastAppContainer = null;
+    setInterval(function() {
+        const currentContainer = document.querySelector('[data-testid="stAppViewContainer"]');
+        if (currentContainer !== lastAppContainer) {
+            lastAppContainer = currentContainer;
+            setTimeout(applyDarkModeStyles, 100);
+        }
+    }, 500);
+</script>
 """,
     unsafe_allow_html=True,
 )
@@ -954,7 +1190,7 @@ else:
 # FOOTER
 st.markdown("---")
 st.markdown(f"""
-<div style='text-align: center; color: #6b7280; padding: 20px;'>
+<div class="footer-text" style='text-align: center; padding: 20px;'>
     <p><strong>Credit Card Delinquency Dashboard</strong></p>
     <p>Model: {model_choice} | Powered by Machine Learning | Version 1.0</p>
     <p style='font-size: 0.9rem;'>December 2025</p>
