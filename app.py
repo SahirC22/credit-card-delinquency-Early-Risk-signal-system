@@ -179,10 +179,10 @@ st.markdown(
     }
 
     /* ========================================
-       DARK MODE STYLES (Applied via class)
+       DARK MODE STYLES (ONLY when dark-mode class is present)
        ======================================== */
     
-    /* When dark mode class is added to body/html */
+    /* Dark mode styles - ONLY apply when body or html has dark-mode class */
     body.dark-mode .main-header,
     html.dark-mode .main-header {
         color: #ffffff !important;
@@ -293,92 +293,6 @@ st.markdown(
     html.dark-mode .footer-text strong {
         color: rgba(255, 255, 255, 0.9) !important;
     }
-    
-    /* Media query fallback */
-    @media (prefers-color-scheme: dark) {
-        .main-header {
-            color: #ffffff !important;
-        }
-
-        .sub-header {
-            color: rgba(255, 255, 255, 0.85) !important;
-        }
-
-        .metric-card,
-        .high-risk-card,
-        .medium-risk-card,
-        .low-risk-card {
-            background: rgba(255, 255, 255, 0.08) !important;
-            color: #ffffff !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-        }
-
-        .metric-card h2,
-        .high-risk-card h2,
-        .medium-risk-card h2,
-        .low-risk-card h2 {
-            color: #ffffff !important;
-        }
-
-        .metric-card p,
-        .high-risk-card p,
-        .medium-risk-card p,
-        .low-risk-card p {
-            color: rgba(255, 255, 255, 0.75) !important;
-        }
-
-        .metric-card small,
-        .high-risk-card small,
-        .medium-risk-card small,
-        .low-risk-card small {
-            color: rgba(255, 255, 255, 0.65) !important;
-        }
-
-        .insight-box {
-            background-color: rgba(251, 191, 36, 0.2) !important;
-            border-color: #fbbf24 !important;
-            color: #fcd34d !important;
-        }
-
-        .error-box {
-            background-color: rgba(239, 68, 68, 0.2) !important;
-            border-color: #ef4444 !important;
-            color: #fca5a5 !important;
-        }
-
-        .success-box {
-            background-color: rgba(16, 185, 129, 0.2) !important;
-            border-color: #10b981 !important;
-            color: #6ee7b7 !important;
-        }
-
-        .stTabs [data-baseweb="tab-list"] {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-        }
-
-        .stTabs [data-baseweb="tab"] {
-            color: rgba(255, 255, 255, 0.75) !important;
-        }
-
-        .stTabs [aria-selected="true"] {
-            background-color: rgba(255, 255, 255, 0.12) !important;
-            color: #ffffff !important;
-        }
-
-        .stDataFrame {
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        }
-
-        .footer-text,
-        .footer-text p {
-            color: rgba(255, 255, 255, 0.75) !important;
-        }
-        
-        .footer-text strong {
-            color: rgba(255, 255, 255, 0.9) !important;
-        }
-    }
 </style>
 
 <script>
@@ -396,33 +310,49 @@ st.markdown(
         
         if (appContainer) {
             const bgColor = window.getComputedStyle(appContainer).backgroundColor;
-            // Streamlit dark mode backgrounds
+            // Streamlit dark mode backgrounds (exact colors Streamlit uses)
             const darkColors = [
                 'rgb(38, 39, 48)', 'rgb(14, 17, 23)', 'rgb(19, 23, 34)',
                 'rgb(15, 17, 23)', 'rgb(17, 24, 39)', 'rgb(31, 41, 55)',
-                'rgba(38, 39, 48, 1)', 'rgba(14, 17, 23, 1)'
+                'rgba(38, 39, 48, 1)', 'rgba(14, 17, 23, 1)',
+                'rgb(38, 39, 48)', 'rgb(14, 17, 23)'
             ];
             
+            // Check for exact dark color match first
             if (darkColors.includes(bgColor)) {
                 isDark = true;
             } else {
-                // Check brightness
+                // Check brightness as fallback (only if brightness is very low)
                 const match = bgColor.match(/\d+/g);
                 if (match && match.length >= 3) {
                     const r = parseInt(match[0]);
                     const g = parseInt(match[1]);
                     const b = parseInt(match[2]);
                     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-                    if (brightness < 100) {
+                    // Only consider it dark if brightness is very low (strict check)
+                    if (brightness < 80) {
                         isDark = true;
                     }
                 }
             }
         }
         
-        // Also check prefers-color-scheme
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            isDark = true;
+        // Also check sidebar and main block to be more accurate
+        const sidebar = document.querySelector('[data-testid="stSidebar"]');
+        const mainBlock = document.querySelector('.main .block-container');
+        
+        if (!isDark && sidebar) {
+            const sidebarBg = window.getComputedStyle(sidebar).backgroundColor;
+            const match = sidebarBg.match(/\d+/g);
+            if (match && match.length >= 3) {
+                const r = parseInt(match[0]);
+                const g = parseInt(match[1]);
+                const b = parseInt(match[2]);
+                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+                if (brightness < 80) {
+                    isDark = true;
+                }
+            }
         }
         
         // Apply or remove dark-mode class
@@ -470,11 +400,6 @@ st.markdown(
     
     // Periodic check for Streamlit reruns and theme changes
     setInterval(detectAndApplyTheme, 1000);
-    
-    // Listen for theme preference changes
-    if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', detectAndApplyTheme);
-    }
 </script>
 """,
     unsafe_allow_html=True,
