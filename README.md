@@ -12,6 +12,9 @@ A complete machine learning-powered web application for predicting credit card d
  **Export Functionality** - Download risk assessments as CSV
  **Single Customer Prediction** - Manual input for individual risk assessment
 
+## View Live Application
+https://sahirc22-credit-card-delinquency-early-risk-signal--app-wvfrfj.streamlit.app/
+
 ## Installation
 
 ### 1. Install Dependencies
