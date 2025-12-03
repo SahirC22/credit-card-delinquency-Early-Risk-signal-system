@@ -24,7 +24,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CUSTOM CSS - clean, minimal, professional with dark mode support
+# CUSTOM CSS - optimized for both light and dark modes
 st.markdown(
     """
 <style>
@@ -34,30 +34,35 @@ st.markdown(
                      "Segoe UI", sans-serif;
     }
 
-    /* Light mode defaults */
+    /* ========================================
+       LIGHT MODE STYLES (Default)
+       ======================================== */
+    
+    /* Headers - Light Mode */
     .main-header {
         font-size: 2.2rem;
         font-weight: 650;
-        color: #111827;
+        color: #111827 !important;
         margin-bottom: 0.25rem;
     }
 
     .sub-header {
         font-size: 1.05rem;
-        color: #6b7280;
+        color: #6b7280 !important;
         margin-bottom: 1.75rem;
     }
 
+    /* Cards - Light Mode */
     .metric-card,
     .high-risk-card,
     .medium-risk-card,
     .low-risk-card {
-        background: #ffffff;
+        background: #ffffff !important;
         padding: 18px 20px;
         border-radius: 12px;
-        color: #111827;
+        color: #111827 !important;
         box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-        border: 1px solid #e5e7eb;
+        border: 1px solid #e5e7eb !important;
     }
 
     .metric-card h2,
@@ -67,7 +72,7 @@ st.markdown(
         margin: 0;
         font-size: 1.6rem;
         font-weight: 650;
-        color: #111827;
+        color: #111827 !important;
     }
 
     .metric-card p,
@@ -78,7 +83,7 @@ st.markdown(
         font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 0.06em;
-        color: #6b7280;
+        color: #6b7280 !important;
     }
 
     .metric-card small,
@@ -88,9 +93,10 @@ st.markdown(
         display: block;
         margin-top: 4px;
         font-size: 0.8rem;
-        color: #4b5563;
+        color: #4b5563 !important;
     }
 
+    /* Card border colors */
     .high-risk-card {
         border-top: 3px solid #b91c1c;
     }
@@ -101,6 +107,7 @@ st.markdown(
         border-top: 3px solid #059669;
     }
 
+    /* Alert boxes - Light Mode */
     .insight-box,
     .error-box,
     .success-box {
@@ -111,26 +118,27 @@ st.markdown(
     }
 
     .insight-box {
-        background-color: #fffbeb;
-        border-color: #fbbf24;
-        color: #92400e;
+        background-color: #fffbeb !important;
+        border-color: #fbbf24 !important;
+        color: #92400e !important;
     }
 
     .error-box {
-        background-color: #fef2f2;
-        border-color: #ef4444;
-        color: #991b1b;
+        background-color: #fef2f2 !important;
+        border-color: #ef4444 !important;
+        color: #991b1b !important;
     }
 
     .success-box {
-        background-color: #ecfdf3;
-        border-color: #10b981;
-        color: #065f46;
+        background-color: #ecfdf3 !important;
+        border-color: #10b981 !important;
+        color: #065f46 !important;
     }
 
+    /* Tabs - Light Mode */
     .stTabs [data-baseweb="tab-list"] {
         gap: 12px;
-        border-bottom: 1px solid #e5e7eb;
+        border-bottom: 1px solid #e5e7eb !important;
         padding-bottom: 4px;
     }
 
@@ -140,92 +148,58 @@ st.markdown(
         background-color: transparent;
         border-radius: 8px 8px 0px 0px;
         font-size: 0.92rem;
-        color: #4b5563;
+        color: #4b5563 !important;
     }
 
     .stTabs [aria-selected="true"] {
-        background-color: #ffffff;
-        color: #111827;
+        background-color: #ffffff !important;
+        color: #111827 !important;
         border-bottom: 2px solid #3b82f6;
     }
 
-    /* Dataframe tweaks */
+    /* Dataframe - Light Mode */
     .stDataFrame {
         border-radius: 10px;
         overflow: hidden;
-        border: 1px solid #e5e7eb;
+        border: 1px solid #e5e7eb !important;
         box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
     }
 
-    /* Footer text styling */
+    /* Footer - Light Mode */
     .footer-text {
-        color: #6b7280;
+        color: #6b7280 !important;
+    }
+    
+    .footer-text p {
+        color: #6b7280 !important;
+    }
+    
+    .footer-text strong {
+        color: #111827 !important;
     }
 
-    /* Universal dark mode detection - applies when body or main container has dark background */
-    body[style*="background-color: rgb(38, 39, 48)"] .main-header,
-    body[style*="background-color: rgb(14, 17, 23)"] .main-header,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .main-header,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .main-header,
-    .stApp[style*="background-color: rgb(38, 39, 48)"] .main-header,
-    .stApp[style*="background-color: rgb(14, 17, 23)"] .main-header {
-        color: #ffffff !important;
-    }
-
-    body[style*="background-color: rgb(38, 39, 48)"] .sub-header,
-    body[style*="background-color: rgb(14, 17, 23)"] .sub-header,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .sub-header,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .sub-header,
-    .stApp[style*="background-color: rgb(38, 39, 48)"] .sub-header,
-    .stApp[style*="background-color: rgb(14, 17, 23)"] .sub-header {
-        color: rgba(255, 255, 255, 0.8) !important;
-    }
-
-    body[style*="background-color: rgb(38, 39, 48)"] .metric-card,
-    body[style*="background-color: rgb(14, 17, 23)"] .metric-card,
-    body[style*="background-color: rgb(38, 39, 48)"] .high-risk-card,
-    body[style*="background-color: rgb(14, 17, 23)"] .high-risk-card,
-    body[style*="background-color: rgb(38, 39, 48)"] .medium-risk-card,
-    body[style*="background-color: rgb(14, 17, 23)"] .medium-risk-card,
-    body[style*="background-color: rgb(38, 39, 48)"] .low-risk-card,
-    body[style*="background-color: rgb(14, 17, 23)"] .low-risk-card,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .metric-card,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .metric-card,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .high-risk-card,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .high-risk-card,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .medium-risk-card,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .medium-risk-card,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .low-risk-card,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .low-risk-card {
-        background: rgba(255, 255, 255, 0.08) !important;
-        color: #ffffff !important;
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    }
-
-    body[style*="background-color: rgb(38, 39, 48)"] .footer-text,
-    body[style*="background-color: rgb(14, 17, 23)"] .footer-text,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .footer-text,
-    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .footer-text {
-        color: rgba(255, 255, 255, 0.75) !important;
-    }
-
-    /* Dark mode media query fallback */
+    /* ========================================
+       DARK MODE STYLES (Overrides)
+       ======================================== */
+    
+    /* Dark mode detection via media query */
     @media (prefers-color-scheme: dark) {
         .main-header {
             color: #ffffff !important;
         }
 
         .sub-header {
-            color: rgba(255, 255, 255, 0.8) !important;
+            color: rgba(255, 255, 255, 0.85) !important;
         }
 
         .metric-card,
         .high-risk-card,
         .medium-risk-card,
         .low-risk-card {
-            background: rgba(255, 255, 255, 0.05) !important;
+            background: rgba(255, 255, 255, 0.08) !important;
             color: #ffffff !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
         }
 
         .metric-card h2,
@@ -239,14 +213,14 @@ st.markdown(
         .high-risk-card p,
         .medium-risk-card p,
         .low-risk-card p {
-            color: rgba(255, 255, 255, 0.7) !important;
+            color: rgba(255, 255, 255, 0.75) !important;
         }
 
         .metric-card small,
         .high-risk-card small,
         .medium-risk-card small,
         .low-risk-card small {
-            color: rgba(255, 255, 255, 0.6) !important;
+            color: rgba(255, 255, 255, 0.65) !important;
         }
 
         .insight-box {
@@ -268,31 +242,54 @@ st.markdown(
         }
 
         .stTabs [data-baseweb="tab-list"] {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
         }
 
         .stTabs [data-baseweb="tab"] {
-            color: rgba(255, 255, 255, 0.7) !important;
+            color: rgba(255, 255, 255, 0.75) !important;
         }
 
         .stTabs [aria-selected="true"] {
-            background-color: rgba(255, 255, 255, 0.1) !important;
+            background-color: rgba(255, 255, 255, 0.12) !important;
             color: #ffffff !important;
         }
 
         .stDataFrame {
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
         }
 
-        .footer-text {
-            color: rgba(255, 255, 255, 0.7) !important;
+        .footer-text,
+        .footer-text p {
+            color: rgba(255, 255, 255, 0.75) !important;
         }
+        
+        .footer-text strong {
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+    }
+    
+    /* Additional dark mode detection for Streamlit's specific dark backgrounds */
+    [data-testid="stAppViewContainer"]:has([style*="background-color: rgb(38"]),
+    [data-testid="stAppViewContainer"]:has([style*="background-color: rgb(14"]),
+    body:has([style*="background-color: rgb(38"]),
+    body:has([style*="background-color: rgb(14"]) {
+        /* Dark mode container detected - styles applied via JavaScript */
     }
 </style>
 
 <script>
-    // Aggressive dark mode detection and style application
-    function applyDarkModeStyles() {
+    /**
+     * Theme Detection and Style Application
+     * 
+     * This script automatically detects Streamlit's theme (Light/Dark) and applies
+     * appropriate styles to ensure all UI elements are visible and optimized in both modes:
+     * 
+     * - Light Mode: Uses dark text on light backgrounds for optimal readability
+     * - Dark Mode: Uses light text on dark backgrounds for optimal readability
+     * 
+     * The script continuously monitors for theme changes and updates styles accordingly.
+     */
+    function applyThemeStyles() {
         // Multiple detection methods - check all possible containers
         const appContainer = document.querySelector('[data-testid="stAppViewContainer"]');
         const mainBlock = document.querySelector('.main .block-container');
@@ -499,31 +496,46 @@ st.markdown(
                 cards: document.querySelectorAll('.metric-card, .high-risk-card, .medium-risk-card, .low-risk-card').length
             });
         } else {
-            // Remove dark mode override in light mode
+            // LIGHT MODE: Remove dark mode override to restore light mode styles
+            console.log('Light mode - using default styles');
             const oldStyle = document.getElementById('dark-mode-override');
             if (oldStyle) oldStyle.remove();
+            
+            // Ensure light mode styles are properly applied by removing inline overrides
+            document.querySelectorAll('.main-header, h1.main-header').forEach(el => {
+                el.style.removeProperty('color');
+            });
+            document.querySelectorAll('.sub-header, p.sub-header').forEach(el => {
+                el.style.removeProperty('color');
+            });
+            document.querySelectorAll('.metric-card, .high-risk-card, .medium-risk-card, .low-risk-card').forEach(el => {
+                el.style.removeProperty('background-color');
+                el.style.removeProperty('color');
+                el.style.removeProperty('border-color');
+            });
         }
     }
     
-    // Apply immediately
-    function initDarkMode() {
-        applyDarkModeStyles();
-        // Also check after a delay to catch Streamlit's initialization
-        setTimeout(applyDarkModeStyles, 100);
-        setTimeout(applyDarkModeStyles, 500);
-        setTimeout(applyDarkModeStyles, 1000);
+    // Initialize theme styles
+    function initTheme() {
+        applyThemeStyles();
+        // Check multiple times to catch Streamlit's initialization
+        setTimeout(applyThemeStyles, 100);
+        setTimeout(applyThemeStyles, 500);
+        setTimeout(applyThemeStyles, 1000);
+        setTimeout(applyThemeStyles, 2000);
     }
     
     // Run on various events
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initDarkMode);
+        document.addEventListener('DOMContentLoaded', initTheme);
     } else {
-        initDarkMode();
+        initTheme();
     }
     
-    window.addEventListener('load', initDarkMode);
+    window.addEventListener('load', initTheme);
     
-    // Watch for DOM changes (Streamlit reruns)
+    // Watch for DOM changes (Streamlit reruns and theme changes)
     const observer = new MutationObserver(function(mutations) {
         let shouldCheck = false;
         mutations.forEach(function(mutation) {
@@ -532,7 +544,7 @@ st.markdown(
             }
         });
         if (shouldCheck) {
-            setTimeout(applyDarkModeStyles, 50);
+            setTimeout(applyThemeStyles, 50);
         }
     });
     
@@ -545,13 +557,18 @@ st.markdown(
         });
     }
     
-    // Periodic check for Streamlit reruns (more frequent for better responsiveness)
-    setInterval(applyDarkModeStyles, 1000);
+    // Periodic check for Streamlit reruns and theme changes
+    setInterval(applyThemeStyles, 1000);
     
     // Also check when Streamlit finishes rendering
     if (window.parent !== window) {
         // Running in iframe (Streamlit Cloud)
-        window.parent.addEventListener('load', initDarkMode);
+        window.parent.addEventListener('load', initTheme);
+    }
+    
+    // Listen for theme preference changes
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyThemeStyles);
     }
 </script>
 """,
