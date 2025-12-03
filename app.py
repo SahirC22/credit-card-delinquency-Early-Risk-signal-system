@@ -162,7 +162,54 @@ st.markdown(
         color: #6b7280;
     }
 
-    /* Dark mode styles - using Streamlit's dark mode detection */
+    /* Universal dark mode detection - applies when body or main container has dark background */
+    body[style*="background-color: rgb(38, 39, 48)"] .main-header,
+    body[style*="background-color: rgb(14, 17, 23)"] .main-header,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .main-header,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .main-header,
+    .stApp[style*="background-color: rgb(38, 39, 48)"] .main-header,
+    .stApp[style*="background-color: rgb(14, 17, 23)"] .main-header {
+        color: #ffffff !important;
+    }
+
+    body[style*="background-color: rgb(38, 39, 48)"] .sub-header,
+    body[style*="background-color: rgb(14, 17, 23)"] .sub-header,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .sub-header,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .sub-header,
+    .stApp[style*="background-color: rgb(38, 39, 48)"] .sub-header,
+    .stApp[style*="background-color: rgb(14, 17, 23)"] .sub-header {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    body[style*="background-color: rgb(38, 39, 48)"] .metric-card,
+    body[style*="background-color: rgb(14, 17, 23)"] .metric-card,
+    body[style*="background-color: rgb(38, 39, 48)"] .high-risk-card,
+    body[style*="background-color: rgb(14, 17, 23)"] .high-risk-card,
+    body[style*="background-color: rgb(38, 39, 48)"] .medium-risk-card,
+    body[style*="background-color: rgb(14, 17, 23)"] .medium-risk-card,
+    body[style*="background-color: rgb(38, 39, 48)"] .low-risk-card,
+    body[style*="background-color: rgb(14, 17, 23)"] .low-risk-card,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .metric-card,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .metric-card,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .high-risk-card,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .high-risk-card,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .medium-risk-card,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .medium-risk-card,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .low-risk-card,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .low-risk-card {
+        background: rgba(255, 255, 255, 0.08) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    }
+
+    body[style*="background-color: rgb(38, 39, 48)"] .footer-text,
+    body[style*="background-color: rgb(14, 17, 23)"] .footer-text,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(38, 39, 48)"] .footer-text,
+    [data-testid="stAppViewContainer"][style*="background-color: rgb(14, 17, 23)"] .footer-text {
+        color: rgba(255, 255, 255, 0.75) !important;
+    }
+
+    /* Dark mode media query fallback */
     @media (prefers-color-scheme: dark) {
         .main-header {
             color: #ffffff !important;
@@ -244,31 +291,57 @@ st.markdown(
 </style>
 
 <script>
-    // Detect and apply dark mode styles dynamically for Streamlit
+    // Aggressive dark mode detection and style application
     function applyDarkModeStyles() {
-        // Check Streamlit's actual theme by looking at computed styles
+        // Multiple detection methods - check all possible containers
         const appContainer = document.querySelector('[data-testid="stAppViewContainer"]');
-        const body = document.body;
+        const mainBlock = document.querySelector('.main .block-container');
+        const stApp = document.querySelector('.stApp');
+        const mainContent = document.querySelector('.main');
+        const sidebar = document.querySelector('[data-testid="stSidebar"]');
         
-        // Get background colors
-        const appBg = appContainer ? window.getComputedStyle(appContainer).backgroundColor : '';
-        const bodyBg = body ? window.getComputedStyle(body).backgroundColor : '';
+        // Get computed styles from multiple elements
+        let appBg = '';
+        let mainBg = '';
+        let bodyBg = '';
+        let sidebarBg = '';
         
-        // Streamlit dark mode background colors (various versions)
+        if (appContainer) {
+            appBg = window.getComputedStyle(appContainer).backgroundColor;
+        }
+        if (mainBlock) {
+            mainBg = window.getComputedStyle(mainBlock).backgroundColor;
+        }
+        if (document.body) {
+            bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        }
+        if (sidebar) {
+            sidebarBg = window.getComputedStyle(sidebar).backgroundColor;
+        }
+        
+        // Streamlit dark mode background colors (expanded list)
         const darkBgColors = [
             'rgb(38, 39, 48)',
             'rgb(14, 17, 23)',
             'rgba(38, 39, 48, 1)',
-            'rgba(14, 17, 23, 1)'
+            'rgba(14, 17, 23, 1)',
+            'rgb(19, 23, 34)',
+            'rgb(0, 0, 0)',
+            'rgb(15, 17, 23)',
+            'rgb(17, 24, 39)',
+            'rgb(31, 41, 55)'
         ];
         
-        // Check if background is dark
-        const isDarkBg = darkBgColors.includes(appBg) || darkBgColors.includes(bodyBg);
+        // Check if any background is dark
+        const isDarkBg = darkBgColors.includes(appBg) || 
+                        darkBgColors.includes(mainBg) || 
+                        darkBgColors.includes(bodyBg) ||
+                        darkBgColors.includes(sidebarBg);
         
-        // Also check prefers-color-scheme
+        // Check prefers-color-scheme
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         
-        // Check if the computed background color is dark (low brightness)
+        // Brightness check function - more aggressive
         function isDarkColor(rgb) {
             if (!rgb || rgb === 'rgba(0, 0, 0, 0)' || rgb === 'transparent') return false;
             const match = rgb.match(/\d+/g);
@@ -276,74 +349,155 @@ st.markdown(
             const r = parseInt(match[0]);
             const g = parseInt(match[1]);
             const b = parseInt(match[2]);
-            // Calculate brightness (0-255)
             const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-            return brightness < 128; // Dark if brightness < 128
+            return brightness < 120; // More aggressive threshold
         }
         
+        // Check if dark - use multiple methods
         const isDarkMode = isDarkBg || prefersDark || 
                           (appBg && isDarkColor(appBg)) || 
-                          (bodyBg && isDarkColor(bodyBg));
+                          (mainBg && isDarkColor(mainBg)) ||
+                          (bodyBg && isDarkColor(bodyBg)) ||
+                          (sidebarBg && isDarkColor(sidebarBg));
         
-        if (isDarkMode) {
-            // Apply dark mode styles to custom elements
+        // Also check if Streamlit's main content area has light text (inverse check)
+        let forceDarkMode = false;
+        const testElement = document.querySelector('.main-header') || document.querySelector('.main') || document.querySelector('h1');
+        if (testElement) {
+            const textColor = window.getComputedStyle(testElement).color;
+            const textMatch = textColor.match(/\d+/g);
+            if (textMatch && textMatch.length >= 3) {
+                const r = parseInt(textMatch[0]);
+                const g = parseInt(textMatch[1]);
+                const b = parseInt(textMatch[2]);
+                // If text is light colored (white/light gray), we're probably in dark mode
+                if (r > 200 && g > 200 && b > 200) {
+                    forceDarkMode = true;
+                }
+            }
+        }
+        
+        // Final dark mode determination
+        const finalIsDarkMode = isDarkMode || forceDarkMode;
+        
+        // Debug logging (can be removed in production)
+        if (window.location.hostname === 'localhost' || window.location.hostname.includes('streamlit')) {
+            console.log('Dark mode detection:', {
+                isDarkBg,
+                prefersDark,
+                forceDarkMode,
+                finalIsDarkMode,
+                appBg,
+                bodyBg,
+                sidebarBg
+            });
+        }
+        
+        // Always apply dark mode styles if detected
+        if (finalIsDarkMode) {
+            // Remove old style if exists
+            let oldStyle = document.getElementById('dark-mode-override');
+            if (oldStyle) oldStyle.remove();
+            
+            // Create new style element
             const style = document.createElement('style');
             style.id = 'dark-mode-override';
             style.textContent = `
                 .main-header { color: #ffffff !important; }
-                .sub-header { color: rgba(255, 255, 255, 0.8) !important; }
+                .sub-header { color: rgba(255, 255, 255, 0.85) !important; }
                 .metric-card, .high-risk-card, .medium-risk-card, .low-risk-card {
-                    background: rgba(255, 255, 255, 0.05) !important;
+                    background: rgba(255, 255, 255, 0.08) !important;
                     color: #ffffff !important;
-                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.15) !important;
                 }
                 .metric-card h2, .high-risk-card h2, .medium-risk-card h2, .low-risk-card h2 {
                     color: #ffffff !important;
                 }
                 .metric-card p, .high-risk-card p, .medium-risk-card p, .low-risk-card p {
-                    color: rgba(255, 255, 255, 0.7) !important;
+                    color: rgba(255, 255, 255, 0.75) !important;
                 }
                 .metric-card small, .high-risk-card small, .medium-risk-card small, .low-risk-card small {
-                    color: rgba(255, 255, 255, 0.6) !important;
+                    color: rgba(255, 255, 255, 0.65) !important;
                 }
                 .insight-box {
-                    background-color: rgba(251, 191, 36, 0.2) !important;
+                    background-color: rgba(251, 191, 36, 0.25) !important;
                     border-color: #fbbf24 !important;
                     color: #fcd34d !important;
                 }
                 .error-box {
-                    background-color: rgba(239, 68, 68, 0.2) !important;
+                    background-color: rgba(239, 68, 68, 0.25) !important;
                     border-color: #ef4444 !important;
                     color: #fca5a5 !important;
                 }
                 .success-box {
-                    background-color: rgba(16, 185, 129, 0.2) !important;
+                    background-color: rgba(16, 185, 129, 0.25) !important;
                     border-color: #10b981 !important;
                     color: #6ee7b7 !important;
                 }
                 .stTabs [data-baseweb="tab-list"] {
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
                 }
                 .stTabs [data-baseweb="tab"] {
-                    color: rgba(255, 255, 255, 0.7) !important;
+                    color: rgba(255, 255, 255, 0.75) !important;
                 }
                 .stTabs [aria-selected="true"] {
-                    background-color: rgba(255, 255, 255, 0.1) !important;
+                    background-color: rgba(255, 255, 255, 0.12) !important;
                     color: #ffffff !important;
                 }
                 .stDataFrame {
-                    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                    border: 1px solid rgba(255, 255, 255, 0.15) !important;
                 }
                 .footer-text {
-                    color: rgba(255, 255, 255, 0.7) !important;
+                    color: rgba(255, 255, 255, 0.75) !important;
+                }
+                .footer-text p {
+                    color: rgba(255, 255, 255, 0.75) !important;
+                }
+                .footer-text strong {
+                    color: rgba(255, 255, 255, 0.9) !important;
                 }
             `;
             
-            // Remove old override if exists
-            const oldStyle = document.getElementById('dark-mode-override');
-            if (oldStyle) oldStyle.remove();
-            
             document.head.appendChild(style);
+            
+            // Also directly apply styles to existing elements (more aggressive)
+            document.querySelectorAll('.main-header, h1.main-header').forEach(el => {
+                el.style.color = '#ffffff';
+                el.style.setProperty('color', '#ffffff', 'important');
+            });
+            document.querySelectorAll('.sub-header, p.sub-header').forEach(el => {
+                el.style.color = 'rgba(255, 255, 255, 0.85)';
+                el.style.setProperty('color', 'rgba(255, 255, 255, 0.85)', 'important');
+            });
+            document.querySelectorAll('.metric-card, .high-risk-card, .medium-risk-card, .low-risk-card').forEach(el => {
+                el.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                el.style.color = '#ffffff';
+                el.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                el.style.setProperty('background-color', 'rgba(255, 255, 255, 0.08)', 'important');
+                el.style.setProperty('color', '#ffffff', 'important');
+                el.style.setProperty('border-color', 'rgba(255, 255, 255, 0.15)', 'important');
+            });
+            // Apply to all child elements in cards
+            document.querySelectorAll('.metric-card h2, .high-risk-card h2, .medium-risk-card h2, .low-risk-card h2').forEach(el => {
+                el.style.color = '#ffffff';
+                el.style.setProperty('color', '#ffffff', 'important');
+            });
+            document.querySelectorAll('.metric-card p, .high-risk-card p, .medium-risk-card p, .low-risk-card p').forEach(el => {
+                el.style.color = 'rgba(255, 255, 255, 0.75)';
+                el.style.setProperty('color', 'rgba(255, 255, 255, 0.75)', 'important');
+            });
+            document.querySelectorAll('.metric-card small, .high-risk-card small, .medium-risk-card small, .low-risk-card small').forEach(el => {
+                el.style.color = 'rgba(255, 255, 255, 0.65)';
+                el.style.setProperty('color', 'rgba(255, 255, 255, 0.65)', 'important');
+            });
+            document.querySelectorAll('.footer-text, .footer-text p, .footer-text strong').forEach(el => {
+                el.style.color = 'rgba(255, 255, 255, 0.75)';
+                el.style.setProperty('color', 'rgba(255, 255, 255, 0.75)', 'important');
+            });
+            console.log('Dark mode styles applied. Elements found:', {
+                headers: document.querySelectorAll('.main-header').length,
+                cards: document.querySelectorAll('.metric-card, .high-risk-card, .medium-risk-card, .low-risk-card').length
+            });
         } else {
             // Remove dark mode override in light mode
             const oldStyle = document.getElementById('dark-mode-override');
@@ -351,21 +505,37 @@ st.markdown(
         }
     }
     
-    // Apply immediately if DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(applyDarkModeStyles, 500); // Wait for Streamlit to initialize
-        });
-    } else {
+    // Apply immediately
+    function initDarkMode() {
+        applyDarkModeStyles();
+        // Also check after a delay to catch Streamlit's initialization
+        setTimeout(applyDarkModeStyles, 100);
         setTimeout(applyDarkModeStyles, 500);
+        setTimeout(applyDarkModeStyles, 1000);
     }
     
-    // Watch for theme changes
-    const observer = new MutationObserver(function() {
-        setTimeout(applyDarkModeStyles, 100);
+    // Run on various events
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initDarkMode);
+    } else {
+        initDarkMode();
+    }
+    
+    window.addEventListener('load', initDarkMode);
+    
+    // Watch for DOM changes (Streamlit reruns)
+    const observer = new MutationObserver(function(mutations) {
+        let shouldCheck = false;
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' || mutation.addedNodes.length > 0) {
+                shouldCheck = true;
+            }
+        });
+        if (shouldCheck) {
+            setTimeout(applyDarkModeStyles, 50);
+        }
     });
     
-    // Observe body and app container for changes
     if (document.body) {
         observer.observe(document.body, { 
             attributes: true, 
@@ -375,20 +545,14 @@ st.markdown(
         });
     }
     
-    // Also check on window load
-    window.addEventListener('load', function() {
-        setTimeout(applyDarkModeStyles, 1000);
-    });
+    // Periodic check for Streamlit reruns (more frequent for better responsiveness)
+    setInterval(applyDarkModeStyles, 1000);
     
-    // Watch for Streamlit reruns (it changes the DOM structure)
-    let lastAppContainer = null;
-    setInterval(function() {
-        const currentContainer = document.querySelector('[data-testid="stAppViewContainer"]');
-        if (currentContainer !== lastAppContainer) {
-            lastAppContainer = currentContainer;
-            setTimeout(applyDarkModeStyles, 100);
-        }
-    }, 500);
+    // Also check when Streamlit finishes rendering
+    if (window.parent !== window) {
+        // Running in iframe (Streamlit Cloud)
+        window.parent.addEventListener('load', initDarkMode);
+    }
 </script>
 """,
     unsafe_allow_html=True,
