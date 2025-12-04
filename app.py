@@ -186,9 +186,20 @@ st.markdown(
     body.dark-mode .main-header,
     html.dark-mode .main-header,
     body.dark-mode [data-testid="stAppViewContainer"] .main-header,
-    html.dark-mode [data-testid="stAppViewContainer"] .main-header {
-        color: #fff !important;
-        text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    html.dark-mode [data-testid="stAppViewContainer"] .main-header,
+    body.dark-mode h1.main-header,
+    html.dark-mode h1.main-header,
+    body.dark-mode .block-container .main-header,
+    html.dark-mode .block-container .main-header {
+        color: #ffffff !important;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.3), 0 0 2px #000;
+        background: rgba(0,0,0,0.03) !important; /* TEMP: REMOVE after testing */
+        -webkit-background-clip: text;
+        background-clip: text;
+        opacity: 1 !important;
+        visibility: visible !important;
+        font-weight: 900 !important;
+        z-index: 2000 !important;
     }
 
     body.dark-mode .sub-header,
