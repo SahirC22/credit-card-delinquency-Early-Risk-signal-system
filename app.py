@@ -812,9 +812,19 @@ elif df is not None and 'Risk_Score' in df.columns:
         styled_df = display_df.style.apply(highlight_risk_level, axis=1)
         st.dataframe(styled_df, use_container_width=True, height=600)
 
+        # Add highlight column for CSV export
+        export_df = display_df.copy()
+        def highlight_value(risk_level):
+            if risk_level == 'High Risk':
+                return 'RED'
+            elif risk_level == 'Medium Risk':
+                return 'YELLOW'
+            else:
+                return ''
+        export_df.insert(2, 'Highlight', export_df['Risk Level'].map(highlight_value))
+        csv = export_df.to_csv(index=False)
         col1, col2 = st.columns([1, 1])
         with col1:
-            csv = display_df.to_csv(index=False)
             st.download_button(
                 "Download Priority List (CSV)",
                 csv,
