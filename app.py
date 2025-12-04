@@ -648,16 +648,15 @@ if df is not None and 'Risk_Score' not in df.columns:
 elif df is not None and 'Risk_Score' in df.columns:
 
     # TABS
-    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
-        [
-            "Portfolio Overview",
-            "Priority Customers",
-            "Risk Framework",
-            "Outreach Playbook",
-            "Performance Metrics",
-            "Dataset Explorer",
-        ]
-    )
+    tab1, tab2, tab3, tab4, tab5, tab6, about_tab = st.tabs([
+        "Portfolio Overview",
+        "Priority Customers",
+        "Risk Framework",
+        "Outreach Playbook",
+        "Performance Metrics",
+        "Dataset Explorer",
+        "About"
+    ])
 
     # TAB 1: PORTFOLIO OVERVIEW
     with tab1:
@@ -888,6 +887,49 @@ Scores are combined into a 0–10 composite risk score and grouped into Low, Med
             f"Displaying all {len(df):,} rows currently loaded. Use the column headers to sort or filter locally."
         )
         st.dataframe(df, use_container_width=True, height=580)
+
+    # ABOUT TAB
+    with about_tab:
+        st.markdown("""
+# About This Application
+
+**Credit Card Delinquency Early Risk Signal System** is a comprehensive dashboard for early detection of credit card payment risk, powered by intelligent machine learning models and behavioural analytics.
+
+**What does it do?**
+- Analyzes customer payment behaviour to predict the risk of credit card delinquency.
+- Flags customers requiring proactive outreach by using a 5-flag risk framework.
+- Provides actionable lists for collections and risk management teams, reducing future portfolio losses.
+- Visualizes portfolio health, risk distribution, and intervention results in real-time.
+
+**Key Features:**
+- Import data from MySQL, CSV, or sample sets.
+- Choose and compare ML models (Random Forest/Gradient Boosting) trained for risk prediction.
+- Get accuracy, AUC, and top drivers for each model.
+- Drill down with interactive tabs: Portfolio Overview, Customer Priority List, 5-Flag Explanations, Outreach Playbook, Metrics, and Data Explorer.
+- Highlighted, downloadable lists for operational teams.
+
+**How to use?**
+1. Select a data source and load customer records.
+2. Choose a prediction model that fits your business preferences.
+3. Click "Calculate Risk Scores" in the sidebar.
+4. View high/medium risk customers for immediate proactive action in the "Priority Customers" tab.
+5. Explore the underlying logic and best practices in other tabs (explanations, framework, metrics, playbooks).
+6. Download prioritized outreach/strategy lists in a single click.
+
+**Risk Model Overview:**
+- Models use payment discipline, utilization, spend change, cash usage, and merchant concentration to score customers 0–10.
+- Customers are segmented into High/Medium/Low Risk tiers with color-coded highlights.
+- The primary aim is to give banks/issuers early signals—weeks before delinquency occurs.
+
+**Who should use this dashboard?**
+- Credit risk managers
+- Collections strategy teams
+- Data scientists (for benchmarking and explainability)
+- Operations and outreach managers
+
+**Disclaimer:**
+All data and models can be extended/customized for your institution’s historical trends, policies, customer segments, and regulatory requirements. For deployment questions or integration needs, contact the project maintainer.
+        """)
 
 else:
     st.info("👈 Please select a data source from the sidebar and load data to begin analysis")
