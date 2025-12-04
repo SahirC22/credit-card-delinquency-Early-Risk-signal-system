@@ -35,28 +35,20 @@ st.markdown(
     }
 
     /* ========================================
-       LIGHT MODE STYLES (Default)
+       LIGHT MODE STYLES ONLY
        ======================================== */
-    
-    /* Headers - Light Mode */
     .main-header {
         font-size: 2.2rem;
         font-weight: 650;
         color: #111827 !important;
         margin-bottom: 0.25rem;
     }
-
     .sub-header {
         font-size: 1.05rem;
         color: #6b7280 !important;
         margin-bottom: 1.75rem;
     }
-
-    /* Cards - Light Mode */
-    .metric-card,
-    .high-risk-card,
-    .medium-risk-card,
-    .low-risk-card {
+    .metric-card, .high-risk-card, .medium-risk-card, .low-risk-card {
         background: #ffffff !important;
         padding: 18px 20px;
         border-radius: 12px;
@@ -64,84 +56,54 @@ st.markdown(
         box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
         border: 1px solid #e5e7eb !important;
     }
-
-    .metric-card h2,
-    .high-risk-card h2,
-    .medium-risk-card h2,
-    .low-risk-card h2 {
+    .metric-card h2, .high-risk-card h2, .medium-risk-card h2, .low-risk-card h2 {
         margin: 0;
         font-size: 1.6rem;
         font-weight: 650;
         color: #111827 !important;
     }
-
-    .metric-card p,
-    .high-risk-card p,
-    .medium-risk-card p,
-    .low-risk-card p {
+    .metric-card p, .high-risk-card p, .medium-risk-card p, .low-risk-card p {
         margin: 2px 0 0 0;
         font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 0.06em;
         color: #6b7280 !important;
     }
-
-    .metric-card small,
-    .high-risk-card small,
-    .medium-risk-card small,
-    .low-risk-card small {
+    .metric-card small, .high-risk-card small, .medium-risk-card small, .low-risk-card small {
         display: block;
         margin-top: 4px;
         font-size: 0.8rem;
         color: #4b5563 !important;
     }
-
-    /* Card border colors */
-    .high-risk-card {
-        border-top: 3px solid #b91c1c;
-    }
-    .medium-risk-card {
-        border-top: 3px solid #d97706;
-    }
-    .low-risk-card {
-        border-top: 3px solid #059669;
-    }
-
-    /* Alert boxes - Light Mode */
-    .insight-box,
-    .error-box,
-    .success-box {
+    .high-risk-card { border-top: 3px solid #b91c1c; }
+    .medium-risk-card { border-top: 3px solid #d97706; }
+    .low-risk-card { border-top: 3px solid #059669; }
+    .insight-box, .error-box, .success-box {
         padding: 14px 16px;
         margin: 18px 0;
         border-radius: 8px;
         border: 1px solid transparent;
     }
-
     .insight-box {
         background-color: #fffbeb !important;
         border-color: #fbbf24 !important;
         color: #92400e !important;
     }
-
     .error-box {
         background-color: #fef2f2 !important;
         border-color: #ef4444 !important;
         color: #991b1b !important;
     }
-
     .success-box {
         background-color: #ecfdf3 !important;
         border-color: #10b981 !important;
         color: #065f46 !important;
     }
-
-    /* Tabs - Light Mode */
     .stTabs [data-baseweb="tab-list"] {
         gap: 12px;
         border-bottom: 1px solid #e5e7eb !important;
         padding-bottom: 4px;
     }
-
     .stTabs [data-baseweb="tab"] {
         height: 42px;
         padding: 0px 16px;
@@ -150,160 +112,22 @@ st.markdown(
         font-size: 0.92rem;
         color: #4b5563 !important;
     }
-
     .stTabs [aria-selected="true"] {
         background-color: #ffffff !important;
         color: #111827 !important;
         border-bottom: 2px solid #3b82f6;
     }
-
-    /* Dataframe - Light Mode */
     .stDataFrame {
         border-radius: 10px;
         overflow: hidden;
         border: 1px solid #e5e7eb !important;
         box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
     }
-
-    /* Footer - Light Mode */
-    .footer-text {
+    .footer-text, .footer-text p {
         color: #6b7280 !important;
     }
-    
-    .footer-text p {
-        color: #6b7280 !important;
-    }
-    
-    .footer-text strong {
-        color: #111827 !important;
-    }
-
-    /* ================== DARK MODE STYLES ====================== */
-    body.dark-mode .main-header,
-    html.dark-mode .main-header,
-    body.dark-mode h1.main-header,
-    html.dark-mode h1.main-header {
-        color: #fff !important;
-        text-shadow: 0 2px 8px #000, 0 1px 3px rgba(0,0,0,0.5);
-        background: none !important;
-        opacity: 1 !important;
-        font-weight: 800 !important;
-    }
-    body.dark-mode .footer-text,
-    html.dark-mode .footer-text,
-    body.dark-mode .footer-text p,
-    html.dark-mode .footer-text p {
-        color: #fff !important;
-        opacity: 0.8 !important;
-    }
+    .footer-text strong { color: #111827 !important; }
 </style>
-
-<script>
-    /**
-     * Simple Theme Detection - Adds/Removes 'dark-mode' class
-     * This ensures CSS rules are applied properly in both light and dark modes
-     */
-    function detectAndApplyTheme() {
-        // Check Streamlit's app container background color
-        const appContainer = document.querySelector('[data-testid="stAppViewContainer"]');
-        const body = document.body;
-        const html = document.documentElement;
-        
-        let isDark = false;
-        
-        if (appContainer) {
-            const bgColor = window.getComputedStyle(appContainer).backgroundColor;
-            // Streamlit dark mode backgrounds (exact colors Streamlit uses)
-            const darkColors = [
-                'rgb(38, 39, 48)', 'rgb(14, 17, 23)', 'rgb(19, 23, 34)',
-                'rgb(15, 17, 23)', 'rgb(17, 24, 39)', 'rgb(31, 41, 55)',
-                'rgba(38, 39, 48, 1)', 'rgba(14, 17, 23, 1)',
-                'rgb(38, 39, 48)', 'rgb(14, 17, 23)'
-            ];
-            
-            // Check for exact dark color match first
-            if (darkColors.includes(bgColor)) {
-                isDark = true;
-            } else {
-                // Check brightness as fallback (only if brightness is very low)
-                const match = bgColor.match(/\d+/g);
-                if (match && match.length >= 3) {
-                    const r = parseInt(match[0]);
-                    const g = parseInt(match[1]);
-                    const b = parseInt(match[2]);
-                    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-                    // Only consider it dark if brightness is very low (strict check)
-                    if (brightness < 80) {
-                        isDark = true;
-                    }
-                }
-            }
-        }
-        
-        // Also check sidebar and main block to be more accurate
-        const sidebar = document.querySelector('[data-testid="stSidebar"]');
-        const mainBlock = document.querySelector('.main .block-container');
-        
-        if (!isDark && sidebar) {
-            const sidebarBg = window.getComputedStyle(sidebar).backgroundColor;
-            const match = sidebarBg.match(/\d+/g);
-            if (match && match.length >= 3) {
-                const r = parseInt(match[0]);
-                const g = parseInt(match[1]);
-                const b = parseInt(match[2]);
-                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-                if (brightness < 80) {
-                    isDark = true;
-                }
-            }
-        }
-        
-        // Apply or remove dark-mode class
-        if (isDark) {
-            body.classList.add('dark-mode');
-            html.classList.add('dark-mode');
-        } else {
-            body.classList.remove('dark-mode');
-            html.classList.remove('dark-mode');
-        }
-    }
-    
-    // Initialize theme detection
-    function initTheme() {
-        detectAndApplyTheme();
-        // Check multiple times to catch Streamlit's initialization
-        setTimeout(detectAndApplyTheme, 100);
-        setTimeout(detectAndApplyTheme, 500);
-        setTimeout(detectAndApplyTheme, 1000);
-        setTimeout(detectAndApplyTheme, 2000);
-    }
-    
-    // Run immediately
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initTheme);
-    } else {
-        initTheme();
-    }
-    
-    window.addEventListener('load', initTheme);
-    
-    // Watch for DOM changes (Streamlit reruns and theme changes)
-    const observer = new MutationObserver(function() {
-        setTimeout(detectAndApplyTheme, 50);
-    });
-    
-    if (document.body) {
-        observer.observe(document.body, { 
-            attributes: true, 
-            attributeFilter: ['class', 'style'],
-            childList: true,
-            subtree: true
-        });
-    }
-    
-    // Periodic check for Streamlit reruns and theme changes
-    setInterval(detectAndApplyTheme, 1000);
-</script>
 """,
     unsafe_allow_html=True,
 )
