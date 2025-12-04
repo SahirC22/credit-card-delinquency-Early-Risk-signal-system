@@ -178,134 +178,23 @@ st.markdown(
         color: #111827 !important;
     }
 
-    /* ========================================
-       DARK MODE STYLES (ONLY when dark-mode class is present)
-       ======================================== */
-    
-    /* Dark mode styles - ONLY apply when body or html has dark-mode class */
+    /* ================== DARK MODE STYLES ====================== */
     body.dark-mode .main-header,
     html.dark-mode .main-header,
-    body.dark-mode [data-testid="stAppViewContainer"] .main-header,
-    html.dark-mode [data-testid="stAppViewContainer"] .main-header,
     body.dark-mode h1.main-header,
-    html.dark-mode h1.main-header,
-    body.dark-mode .block-container .main-header,
-    html.dark-mode .block-container .main-header {
-        color: #ffffff !important;
-        text-shadow: 0 2px 6px rgba(0,0,0,0.3), 0 0 2px #000;
-        background: rgba(0,0,0,0.03) !important; /* TEMP: REMOVE after testing */
-        -webkit-background-clip: text;
-        background-clip: text;
+    html.dark-mode h1.main-header {
+        color: #fff !important;
+        text-shadow: 0 2px 8px #000, 0 1px 3px rgba(0,0,0,0.5);
+        background: none !important;
         opacity: 1 !important;
-        visibility: visible !important;
-        font-weight: 900 !important;
-        z-index: 2000 !important;
+        font-weight: 800 !important;
     }
-
-    body.dark-mode .sub-header,
-    html.dark-mode .sub-header {
-        color: rgba(255, 255, 255, 0.85) !important;
-    }
-
-    body.dark-mode .metric-card,
-    body.dark-mode .high-risk-card,
-    body.dark-mode .medium-risk-card,
-    body.dark-mode .low-risk-card,
-    html.dark-mode .metric-card,
-    html.dark-mode .high-risk-card,
-    html.dark-mode .medium-risk-card,
-    html.dark-mode .low-risk-card {
-        background: rgba(255, 255, 255, 0.08) !important;
-        color: #ffffff !important;
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3) !important;
-    }
-
-    body.dark-mode .metric-card h2,
-    body.dark-mode .high-risk-card h2,
-    body.dark-mode .medium-risk-card h2,
-    body.dark-mode .low-risk-card h2,
-    html.dark-mode .metric-card h2,
-    html.dark-mode .high-risk-card h2,
-    html.dark-mode .medium-risk-card h2,
-    html.dark-mode .low-risk-card h2 {
-        color: #ffffff !important;
-    }
-
-    body.dark-mode .metric-card p,
-    body.dark-mode .high-risk-card p,
-    body.dark-mode .medium-risk-card p,
-    body.dark-mode .low-risk-card p,
-    html.dark-mode .metric-card p,
-    html.dark-mode .high-risk-card p,
-    html.dark-mode .medium-risk-card p,
-    html.dark-mode .low-risk-card p {
-        color: rgba(255, 255, 255, 0.75) !important;
-    }
-
-    body.dark-mode .metric-card small,
-    body.dark-mode .high-risk-card small,
-    body.dark-mode .medium-risk-card small,
-    body.dark-mode .low-risk-card small,
-    html.dark-mode .metric-card small,
-    html.dark-mode .high-risk-card small,
-    html.dark-mode .medium-risk-card small,
-    html.dark-mode .low-risk-card small {
-        color: rgba(255, 255, 255, 0.65) !important;
-    }
-
-    body.dark-mode .insight-box,
-    html.dark-mode .insight-box {
-        background-color: rgba(251, 191, 36, 0.2) !important;
-        border-color: #fbbf24 !important;
-        color: #fcd34d !important;
-    }
-
-    body.dark-mode .error-box,
-    html.dark-mode .error-box {
-        background-color: rgba(239, 68, 68, 0.2) !important;
-        border-color: #ef4444 !important;
-        color: #fca5a5 !important;
-    }
-
-    body.dark-mode .success-box,
-    html.dark-mode .success-box {
-        background-color: rgba(16, 185, 129, 0.2) !important;
-        border-color: #10b981 !important;
-        color: #6ee7b7 !important;
-    }
-
-    body.dark-mode .stTabs [data-baseweb="tab-list"],
-    html.dark-mode .stTabs [data-baseweb="tab-list"] {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-    }
-
-    body.dark-mode .stTabs [data-baseweb="tab"],
-    html.dark-mode .stTabs [data-baseweb="tab"] {
-        color: rgba(255, 255, 255, 0.75) !important;
-    }
-
-    body.dark-mode .stTabs [aria-selected="true"],
-    html.dark-mode .stTabs [aria-selected="true"] {
-        background-color: rgba(255, 255, 255, 0.12) !important;
-        color: #ffffff !important;
-    }
-
-    body.dark-mode .stDataFrame,
-    html.dark-mode .stDataFrame {
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    }
-
     body.dark-mode .footer-text,
-    body.dark-mode .footer-text p,
     html.dark-mode .footer-text,
+    body.dark-mode .footer-text p,
     html.dark-mode .footer-text p {
-        color: rgba(255, 255, 255, 0.75) !important;
-    }
-    
-    body.dark-mode .footer-text strong,
-    html.dark-mode .footer-text strong {
-        color: rgba(255, 255, 255, 0.9) !important;
+        color: #fff !important;
+        opacity: 0.8 !important;
     }
 </style>
 
@@ -912,7 +801,7 @@ if df is not None:
 # MAIN APPLICATION
 # ============================================================================
 
-st.markdown('<h1 class="main-header">Credit Card Delinquency Dashboad</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="main-header">Credit Card Delinquency Dashboard</h1>', unsafe_allow_html=True)
 
 
 # DATA PREVIEW (Before Processing)
