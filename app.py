@@ -184,8 +184,11 @@ st.markdown(
     
     /* Dark mode styles - ONLY apply when body or html has dark-mode class */
     body.dark-mode .main-header,
-    html.dark-mode .main-header {
-        color: #ffffff !important;
+    html.dark-mode .main-header,
+    body.dark-mode [data-testid="stAppViewContainer"] .main-header,
+    html.dark-mode [data-testid="stAppViewContainer"] .main-header {
+        color: #fff !important;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
     body.dark-mode .sub-header,
