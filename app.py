@@ -777,20 +777,9 @@ elif df is not None and 'Risk_Score' in df.columns:
         These customers require proactive outreach within **48 hours**. Focus on HIGH RISK tier first.
         """
         )
-
-        if len(df) <= 5:
-            num_priority = len(df)
-            st.info(f"Showing all {len(df)} customers (dataset has ≤5 rows).")
-        else:
-            num_priority = st.slider(
-                "Number of priority customers to display",
-                min_value=5,
-                max_value=len(df),
-                value=min(15, len(df)),
-                step=5 if len(df) >= 25 else 1,
-                help="Slide to the maximum value to review every customer in the dataset.",
-            )
-
+        # Always show all rows
+        num_priority = len(df)
+        st.info(f"Showing all {len(df)} priority customers.")
         top_customers = df.nlargest(num_priority, 'Risk_Score')
 
         display_df = top_customers[[
